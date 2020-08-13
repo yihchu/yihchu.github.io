@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Joker">
+
+
+    <meta name="subtitle" content="他强由他强，清风拂山岗～">
+
+
+    <meta name="description" content="哈尔滨工业大学 | 计算机科学与技术">
+
+
+    <meta name="keywords" content="Joker Blog">
+
+
+<title>关于Mybatis使用useGeneratedKeys获取自增主键 | Joker&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Joker&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Joker&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+
+</script>
+
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">关于Mybatis使用useGeneratedKeys获取自增主键</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Joker</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">八月 13, 2020&nbsp;&nbsp;13:35:04</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/遇到的问题/">遇到的问题</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>我们经常使用useGenerateKeys来返回自增主键，避免多一次查询。也会经常使用on duplicate key update，来进行批量的upsert。<br>用起来真的很方便，但是最近在用的过程中，不小心掉进了坑里，所以这里来记录一下～</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>先描述一下这个坑：</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>insert</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>upsert<span class="token punctuation">"</span></span> <span class="token attr-name">useGeneratedKeys</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">keyProperty</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>id<span class="token punctuation">"</span></span> <span class="token attr-name">parameterType</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>java.util.List<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  insert into app_product_phase(id, name, created_by, created_at, updated_by, updated_at)
+  VALUES
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>foreach</span> <span class="token attr-name">collection</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list<span class="token punctuation">"</span></span> <span class="token attr-name">index</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>index<span class="token punctuation">"</span></span> <span class="token attr-name">separator</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>,<span class="token punctuation">"</span></span> <span class="token attr-name">item</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>item<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    (#{item.id}, #{item.name}, #{entity.createdBy}, NOW(), #{entity.updatedBy}, NOW())
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>foreach</span><span class="token punctuation">></span></span>
+  on duplicate key update updated_by = values(updated_by), updated_at = NOW()
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>insert</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我需要将一个<code>list</code>批量插入到数据库中，起初，只是插入进去就可以了，所以这么写并没有任何问题～<br>但是后来由于业务原因，需要对这些数据做一些后续处理，所以需要拿到他们的自增<code>id</code>。<br>然后并没有修改代码，结果发现了很大的问题，除了第一条数据有<code>id</code>之后，其他数据的<code>id</code>均是<code>0</code>～<br>而且，即使第一条数据的<code>id</code>也不一定是对的～<br>这里分两种情况，如果第一条数据是新插入的行，那么这个<code>id</code>就是真实的～ 否则那就是后面数据中第一个新插入行的<code>id</code>～如果没有新插入行，那么这个<code>id</code>似乎是最后一条<code>update</code>那行数据的<code>id</code>（这里不怎么确定）。<br>但是，明明<code>Mybatis</code>的<code>3.3.1</code>之后的版本都是支持批量插入时返回自增主键的，就很困惑～<br>但是当我尝试把<code>on duplicate key update</code>去掉后，确实拿到的数据都是对的，那么问题就出现在这一句了～<br>接下来，我们就分析一下这到底是咋回事～</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><h2 id="Mybatis怎么获得自增主键的？"><a href="#Mybatis怎么获得自增主键的？" class="headerlink" title="Mybatis怎么获得自增主键的？"></a>Mybatis怎么获得自增主键的？</h2><p>我们都知道，如果想在<code>insert</code>后得到数据的自增主键，那么我们需要使用<code>useGeneratedKeys=&quot;true&quot;</code>。<br>所以很自然，我们需要去看看这个东西到底是怎么回事～<br>在<code>Mybatis</code>的<a href="https://mybatis.org/mybatis-3/zh/sqlmap-xml.html#insert_update_and_delete" target="_blank" rel="noopener">官方文档</a>中，有这么一句话：</p>
+<blockquote>
+<p>useGeneratedKeys    （仅适用于 insert 和 update）这会令 MyBatis 使用 JDBC 的 getGeneratedKeys 方法来取出由数据库内部生成的主键（比如：像 MySQL 和 SQL Server 这样的关系型数据库管理系统的自动递增字段），默认值：false。</p>
+</blockquote>
+<p>所以，我们就知道了，<code>Mybatis</code>时使用<code>JDBC</code>的<code>getGeneratedKeys</code>方法做的这件事～</p>
+<h2 id="JDBC的getGeneratedKeys方法"><a href="#JDBC的getGeneratedKeys方法" class="headerlink" title="JDBC的getGeneratedKeys方法"></a>JDBC的getGeneratedKeys方法</h2><p>我在项目中找到了对应的代码(<code>mysql-connector-java</code>:<code>5.1.46</code>:<code>com/mysql/jdbc/StatementImpl.java:1576</code>)</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
+     * @throws SQLException
+     */</span>
+    <span class="token keyword">public</span> java<span class="token punctuation">.</span>sql<span class="token punctuation">.</span>ResultSet <span class="token function">getGeneratedKeys</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> SQLException <span class="token punctuation">{</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token function">checkClosed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getConnectionMutex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span>retrieveGeneratedKeys<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> SQLError<span class="token punctuation">.</span><span class="token function">createSQLException</span><span class="token punctuation">(</span>Messages<span class="token punctuation">.</span><span class="token function">getString</span><span class="token punctuation">(</span><span class="token string">"Statement.GeneratedKeysNotRequested"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> SQLError<span class="token punctuation">.</span>SQL_STATE_ILLEGAL_ARGUMENT<span class="token punctuation">,</span>
+                        <span class="token function">getExceptionInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>batchedGeneratedKeys <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>lastQueryIsOnDupKeyUpdate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>generatedKeysResults <span class="token operator">=</span> <span class="token function">getGeneratedKeysInternal</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>generatedKeysResults <span class="token operator">=</span> <span class="token function">getGeneratedKeysInternal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            Field<span class="token punctuation">[</span><span class="token punctuation">]</span> fields <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Field</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            fields<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Field</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"GENERATED_KEY"</span><span class="token punctuation">,</span> Types<span class="token punctuation">.</span>BIGINT<span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fields<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">setConnection</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>connection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">this</span><span class="token punctuation">.</span>generatedKeysResults <span class="token operator">=</span> com<span class="token punctuation">.</span>mysql<span class="token punctuation">.</span>jdbc<span class="token punctuation">.</span>ResultSetImpl<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>currentCatalog<span class="token punctuation">,</span> fields<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">RowDataStatic</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>batchedGeneratedKeys<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    <span class="token keyword">this</span><span class="token punctuation">.</span>connection<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>generatedKeysResults<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>划重点啊～ 请看中间部分的<code>if</code>判断，这里是把是否使用<code>on duplicate key update</code>分别做了不同的处理，其中使用<code>on duplicate key update</code>的调用了<code>getGeneratedKeysInternal()</code>函数，并传入<code>1</code>作为参数；而其他的则调用<code>getGeneratedKeysInternal()</code>函数。</p>
+<p>我们先看<code>getGeneratedKeysInternal()</code>函数：</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">protected</span> ResultSetInternalMethods <span class="token function">getGeneratedKeysInternal</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> SQLException <span class="token punctuation">{</span>
+        <span class="token keyword">long</span> numKeys <span class="token operator">=</span> <span class="token function">getLargeUpdateCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">getGeneratedKeysInternal</span><span class="token punctuation">(</span>numKeys<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>很简单，他其实就是取了一下受影响的行数，之后同样调用了带参数的<code>getGeneratedKeysInternal()</code>方法。那么接下来看一下这个方法：</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">protected</span> ResultSetInternalMethods <span class="token function">getGeneratedKeysInternal</span><span class="token punctuation">(</span><span class="token keyword">long</span> numKeys<span class="token punctuation">)</span> <span class="token keyword">throws</span> SQLException <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 1</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token function">checkClosed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getConnectionMutex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            Field<span class="token punctuation">[</span><span class="token punctuation">]</span> fields <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Field</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            fields<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Field</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span> <span class="token string">"GENERATED_KEY"</span><span class="token punctuation">,</span> Types<span class="token punctuation">.</span>BIGINT<span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fields<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">setConnection</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>connection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fields<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">setUseOldNameMetadata</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            ArrayList<span class="token operator">&lt;</span>ResultSetRow<span class="token operator">></span> rowSet <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>ResultSetRow<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">long</span> beginAt <span class="token operator">=</span> <span class="token function">getLastInsertID</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 2</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>beginAt <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// looking at an UNSIGNED BIGINT that has overflowed</span>
+                fields<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">setUnsigned</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>results <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                String serverInfo <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>results<span class="token punctuation">.</span><span class="token function">getServerInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                <span class="token comment" spellcheck="true">//</span>
+                <span class="token comment" spellcheck="true">// Only parse server info messages for 'REPLACE' queries</span>
+                <span class="token comment" spellcheck="true">//</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>numKeys <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>results<span class="token punctuation">.</span><span class="token function">getFirstCharOfQuery</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">'R'</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>serverInfo <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>serverInfo<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    numKeys <span class="token operator">=</span> <span class="token function">getRecordCountFromInfo</span><span class="token punctuation">(</span>serverInfo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>beginAt <span class="token operator">!=</span> <span class="token number">0</span> <span class="token comment" spellcheck="true">/* BIGINT UNSIGNED can wrap the protocol representation */</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>numKeys <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> numKeys<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 3</span>
+                        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> row <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">byte</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span>beginAt <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                            row<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> StringUtils<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span>Long<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>beginAt<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                            <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> asBytes <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">byte</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                            asBytes<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>beginAt <span class="token operator">&amp;</span> <span class="token number">0xff</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            asBytes<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>beginAt <span class="token operator">>>></span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            asBytes<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>beginAt <span class="token operator">>>></span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            asBytes<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>beginAt <span class="token operator">>>></span> <span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            asBytes<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>beginAt <span class="token operator">>>></span> <span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            asBytes<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>beginAt <span class="token operator">>>></span> <span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            asBytes<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>beginAt <span class="token operator">>>></span> <span class="token number">48</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            asBytes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">byte</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>beginAt <span class="token operator">>>></span> <span class="token number">56</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                            BigInteger val <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BigInteger</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> asBytes<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+                            row<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> val<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span>
+                        rowSet<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ByteArrayRow</span><span class="token punctuation">(</span>row<span class="token punctuation">,</span> <span class="token function">getExceptionInterceptor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        beginAt <span class="token operator">+=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>connection<span class="token punctuation">.</span><span class="token function">getAutoIncrementIncrement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+
+            com<span class="token punctuation">.</span>mysql<span class="token punctuation">.</span>jdbc<span class="token punctuation">.</span>ResultSetImpl gkRs <span class="token operator">=</span> com<span class="token punctuation">.</span>mysql<span class="token punctuation">.</span>jdbc<span class="token punctuation">.</span>ResultSetImpl<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>currentCatalog<span class="token punctuation">,</span> fields<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">RowDataStatic</span><span class="token punctuation">(</span>rowSet<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    <span class="token keyword">this</span><span class="token punctuation">.</span>connection<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token keyword">return</span> gkRs<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个函数稍有点长，不过我们不用太在意细节～ 我们要看的就几点：</p>
+<ol>
+<li>参数：主键的数量。上文可知，使用<code>on duplicate key update</code>时，我们传入的这个参数是<code>1</code>，没使用时，传入的才是真正插入到数据库中的行数。这个是为啥呢，请看下文～</li>
+<li>获取上一次<code>insert</code>的（第一个）主键</li>
+<li>根据受影响的行数（也就是新插入的行数），依次处理主键</li>
+<li>因为是自增主键，所以获取自增的增量，逐个累加来计算主键。</li>
+</ol>
+<p>从这几段代码可以看出来，我们上面<code>sql</code>执行后得到的结果，完全是没有问题的，即使用了<code>on duplicate key update</code>语句时，只有第一条数据的主键是正确的。<br>因为，在<code>jdbc</code>中，的的确确就只给我们拿了第一行数据的主键。<br>不过，从这里也可以看出这么做的原因，那就是，如果只是插入的话，那么主键是可以被计算出来的；而如果是对已经存在的数据进行修改的话，那么主键是无法通过这种方式计算出来的。<br>这也是为啥使用<code>on duplicate key update</code>时，<code>numKeys</code>参数传入的是<code>1</code>。</p>
+<p>此外，如果使用了<code>on duplicate key update</code>，那么通过<code>getLargeUpdateCount()</code>方法获取到的受影响行数也是不准确的，具体请见下文哈～</p>
+<h2 id="受影响行数"><a href="#受影响行数" class="headerlink" title="受影响行数"></a>受影响行数</h2><p>在<code>Mysql</code>的<a href="https://dev.mysql.com/doc/refman/5.6/en/insert-on-duplicate.html" target="_blank" rel="noopener">官方文档</a>中是这么写的：</p>
+<blockquote>
+<p>With ON DUPLICATE KEY UPDATE, the affected-rows value per row is 1 if the row is inserted as a new row, 2 if an existing row is updated, and 0 if an existing row is set to its current values. If you specify the CLIENT_FOUND_ROWS flag to the mysql_real_connect() C API function when connecting to mysqld, the affected-rows value is 1 (not 0) if an existing row is set to its current values.</p>
+</blockquote>
+<p>也就是说，在<code>on duplicate key update</code>时，这个受影响行数分3种情况，第一种是插入，插入一行就返回<code>1</code>；第二种是修改，修改一行就返回<code>2</code>；第三种是修改了但是数据未变，这种情况根据不同的配置，返回<code>0</code>或<code>1</code>。<br>而如果我们的语句中不带<code>on duplicate key update</code>，那么受影响行数自然就是插入的行数了～</p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>为啥<code>getLastInsertID()</code>方法只返回第一个插入行（注意是新插入行，不是第一个受影响行）的主键呢，如果直接返回全部的不就好了吗？也不用再逐行再计算一边了，还能解决这个<code>on duplicate key update</code>的问题。<br>在<code>Mysql</code>的<a href="https://dev.mysql.com/doc/refman/5.6/en/example-auto-increment.html" target="_blank" rel="noopener">官方文档</a>上有这么一句话哈～</p>
+<blockquote>
+<p>For a multiple-row insert, LAST_INSERT_ID() and mysql_insert_id() actually return the AUTO_INCREMENT key from the first of the inserted rows. This enables multiple-row inserts to be reproduced correctly on other servers in a replication setup.</p>
+</blockquote>
+<p>再深入的调查就没有了～  如有大神看见，请指点～</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>在<code>Mybatis</code>的<code>3.3.1</code>之后的版本中，可以在批量<code>insert</code>中得到所有数据的主键。<br>但是如果是批量<code>upsert</code>，即使用了<code>on duplicate key update</code>，不行～</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Joker</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/">https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>他强由他强，清风拂山岗～</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/issue/"># issue</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Joker | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+    <div class="menu-div">
+        <input id="switch_default" type="checkbox" class="switch_default">
+        <label for="switch_default" class="toggleBtn hide"></label>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
