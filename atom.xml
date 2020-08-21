@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yihchu.github.io/"/>
-  <updated>2020-08-13T09:03:02.007Z</updated>
+  <updated>2020-08-21T08:04:40.770Z</updated>
   <id>https://yihchu.github.io/</id>
   
   <author>
@@ -17,11 +17,41 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>HashMap的一些笔记</title>
+    <link href="https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/"/>
+    <id>https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/</id>
+    <published>2020-08-17T08:48:29.000Z</published>
+    <updated>2020-08-21T08:04:40.770Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;元素(entry): 具体存储数据的东西&lt;/li&gt;
+&lt;li&gt;桶(bucket):
+        
+      
+    
+    </summary>
+    
+      <category term="基础知识" scheme="https://yihchu.github.io/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+      <category term="java" scheme="https://yihchu.github.io/tags/java/"/>
+    
+      <category term="HashMap" scheme="https://yihchu.github.io/tags/HashMap/"/>
+    
+  </entry>
+  
+  <entry>
     <title>关于Mybatis使用useGeneratedKeys获取自增主键</title>
     <link href="https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/"/>
     <id>https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/</id>
     <published>2020-08-13T05:35:04.000Z</published>
-    <updated>2020-08-13T09:03:02.007Z</updated>
+    <updated>2020-08-20T02:36:07.440Z</updated>
     
     <summary type="html">
     
@@ -39,6 +69,10 @@
     
     
       <category term="issue" scheme="https://yihchu.github.io/tags/issue/"/>
+    
+      <category term="Mybatis" scheme="https://yihchu.github.io/tags/Mybatis/"/>
+    
+      <category term="useGeneratedKeys" scheme="https://yihchu.github.io/tags/useGeneratedKeys/"/>
     
   </entry>
   

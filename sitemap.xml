@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/</loc>
+    
+    <lastmod>2020-08-21T08:04:40.770Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/</loc>
+    
+    <lastmod>2020-08-20T02:36:07.440Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yihchu.github.io/categories/index.html</loc>
     
     <lastmod>2020-08-14T00:34:14.545Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>https://yihchu.github.io/tags/index.html</loc>
     
     <lastmod>2020-08-14T00:33:47.261Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/</loc>
-    
-    <lastmod>2020-08-13T09:03:02.007Z</lastmod>
     
   </url>
   
