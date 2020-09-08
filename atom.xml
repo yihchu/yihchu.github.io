@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://yihchu.github.io/"/>
-  <updated>2020-08-21T08:04:40.770Z</updated>
+  <updated>2020-09-08T07:10:00.296Z</updated>
   <id>https://yihchu.github.io/</id>
   
   <author>
@@ -17,11 +17,69 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>关于RedisTemplate的ERR EXEC without MULTI错误</title>
+    <link href="https://yihchu.github.io/2020/09/07/guan-yu-redistemplate-de-errexecwithoutmulti-cuo-wu/"/>
+    <id>https://yihchu.github.io/2020/09/07/guan-yu-redistemplate-de-errexecwithoutmulti-cuo-wu/</id>
+    <published>2020-09-07T08:58:18.000Z</published>
+    <updated>2020-09-08T07:10:00.296Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h1&gt;&lt;p&gt;在看[Redis in
+        
+      
+    
+    </summary>
+    
+      <category term="遇到的问题" scheme="https://yihchu.github.io/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    
+    
+      <category term="issue" scheme="https://yihchu.github.io/tags/issue/"/>
+    
+      <category term="RedisTemplate" scheme="https://yihchu.github.io/tags/RedisTemplate/"/>
+    
+      <category term="ERR EXEC without MULTI" scheme="https://yihchu.github.io/tags/ERR-EXEC-without-MULTI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一些数据类型转换的整理</title>
+    <link href="https://yihchu.github.io/2020/09/01/yi-xie-shu-ju-lei-xing-zhuan-huan-de-zheng-li/"/>
+    <id>https://yihchu.github.io/2020/09/01/yi-xie-shu-ju-lei-xing-zhuan-huan-de-zheng-li/</id>
+    <published>2020-09-01T02:10:11.000Z</published>
+    <updated>2020-09-01T02:50:02.799Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;数组-和-流&quot;&gt;&lt;a href=&quot;#数组-和-流&quot; class=&quot;headerlink&quot; title=&quot;数组 和 流&quot;&gt;&lt;/a&gt;数组 和 流&lt;/h1&gt;&lt;h2 id=&quot;原始类型数组-to-Stream&quot;&gt;&lt;a href=&quot;#原始类型数组-to-Stream&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="基础知识" scheme="https://yihchu.github.io/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+      <category term="java" scheme="https://yihchu.github.io/tags/java/"/>
+    
+      <category term="类型转换" scheme="https://yihchu.github.io/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/"/>
+    
+  </entry>
+  
+  <entry>
     <title>HashMap的一些笔记</title>
     <link href="https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/"/>
     <id>https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/</id>
     <published>2020-08-17T08:48:29.000Z</published>
-    <updated>2020-08-21T08:04:40.770Z</updated>
+    <updated>2020-08-21T08:59:32.760Z</updated>
     
     <summary type="html">
     
