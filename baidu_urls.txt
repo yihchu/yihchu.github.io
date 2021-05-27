@@ -1,4 +1,0 @@
-https://yihchu.github.io/2020/09/07/guan-yu-redistemplate-de-errexecwithoutmulti-cuo-wu/
-https://yihchu.github.io/2020/09/01/yi-xie-shu-ju-lei-xing-zhuan-huan-de-zheng-li/
-https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/
-https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/
