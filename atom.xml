@@ -3,10 +3,10 @@
   <title>Joker&#39;s Blog</title>
   
   <subtitle>他强由他强，清风拂山岗～</subtitle>
-  <link href="/atom.xml" rel="self"/>
+  <link href="https://yihchu.github.io/atom.xml" rel="self"/>
   
   <link href="https://yihchu.github.io/"/>
-  <updated>2020-09-08T07:22:24.869Z</updated>
+  <updated>2021-07-09T08:49:12.908Z</updated>
   <id>https://yihchu.github.io/</id>
   
   <author>
@@ -14,35 +14,115 @@
     
   </author>
   
-  <generator uri="http://hexo.io/">Hexo</generator>
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>零零碎碎的历史和概念</title>
+    <link href="https://yihchu.github.io/2021/07/09/ling-ling-sui-sui-de-li-shi-he-gai-nian/"/>
+    <id>https://yihchu.github.io/2021/07/09/ling-ling-sui-sui-de-li-shi-he-gai-nian/</id>
+    <published>2021-07-09T06:31:51.000Z</published>
+    <updated>2021-07-09T08:49:12.908Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在看各种代码和文档的时候，老是会遇见各种不太认识的词汇，也不懂到底是啥，也不懂到底是从哪里来的，有什么意义。&lt;br&gt;但是计算机作为一个完全由人类从零创造的东西，知其然，知其所以然，还有很有意义的。&lt;br&gt;这里简单总结一下各个概念和相关的一些历史。&lt;br&gt;（本人水平有限，有不</summary>
+        
+      
+    
+    
+    
+    <category term="杂谈" scheme="https://yihchu.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="历史" scheme="https://yihchu.github.io/tags/%E5%8E%86%E5%8F%B2/"/>
+    
+    <category term="概念" scheme="https://yihchu.github.io/tags/%E6%A6%82%E5%BF%B5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>优秀教程收集</title>
+    <link href="https://yihchu.github.io/2020/12/14/you-xiu-jiao-cheng-shou-ji/"/>
+    <id>https://yihchu.github.io/2020/12/14/you-xiu-jiao-cheng-shou-ji/</id>
+    <published>2020-12-14T06:29:30.000Z</published>
+    <updated>2020-12-14T06:35:49.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://wangdoc.com/bash/&quot;&gt;阮一峰 Bash 脚本教程&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://wangdoc.com/ssh/&quot;&gt;阮一峰 SSH</summary>
+        
+      
+    
+    
+    
+    <category term="基础知识" scheme="https://yihchu.github.io/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="教程" scheme="https://yihchu.github.io/tags/%E6%95%99%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Centos7.8 NFS安装配置</title>
+    <link href="https://yihchu.github.io/2020/10/22/centos7-8-nfs-an-zhuang-pei-zhi/"/>
+    <id>https://yihchu.github.io/2020/10/22/centos7-8-nfs-an-zhuang-pei-zhi/</id>
+    <published>2020-10-22T07:29:59.000Z</published>
+    <updated>2020-10-28T03:25:02.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Server端&quot;&gt;&lt;a href=&quot;#Server端&quot; class=&quot;headerlink&quot; title=&quot;Server端&quot;&gt;&lt;/a&gt;Server端&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;sudo yum install</summary>
+        
+      
+    
+    
+    
+    <category term="基础知识" scheme="https://yihchu.github.io/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="linux" scheme="https://yihchu.github.io/tags/linux/"/>
+    
+    <category term="centos7" scheme="https://yihchu.github.io/tags/centos7/"/>
+    
+    <category term="nfs" scheme="https://yihchu.github.io/tags/nfs/"/>
+    
+  </entry>
   
   <entry>
     <title>关于RedisTemplate的ERR EXEC without MULTI错误</title>
     <link href="https://yihchu.github.io/2020/09/07/guan-yu-redistemplate-de-errexecwithoutmulti-cuo-wu/"/>
     <id>https://yihchu.github.io/2020/09/07/guan-yu-redistemplate-de-errexecwithoutmulti-cuo-wu/</id>
     <published>2020-09-07T08:58:18.000Z</published>
-    <updated>2020-09-08T07:22:24.869Z</updated>
+    <updated>2020-09-08T07:22:24.000Z</updated>
     
-    <summary type="html">
     
       
       
         
         
-          &lt;h1 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h1&gt;&lt;p&gt;在看[Redis in
+    <summary type="html">&lt;h1 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h1&gt;&lt;p&gt;在看[Redis in</summary>
         
       
     
-    </summary>
-    
-      <category term="遇到的问题" scheme="https://yihchu.github.io/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
     
     
-      <category term="issue" scheme="https://yihchu.github.io/tags/issue/"/>
+    <category term="遇到的问题" scheme="https://yihchu.github.io/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
     
-      <category term="RedisTemplate" scheme="https://yihchu.github.io/tags/RedisTemplate/"/>
     
-      <category term="ERR EXEC without MULTI" scheme="https://yihchu.github.io/tags/ERR-EXEC-without-MULTI/"/>
+    <category term="issue" scheme="https://yihchu.github.io/tags/issue/"/>
+    
+    <category term="RedisTemplate" scheme="https://yihchu.github.io/tags/RedisTemplate/"/>
+    
+    <category term="ERR EXEC without MULTI" scheme="https://yihchu.github.io/tags/ERR-EXEC-without-MULTI/"/>
     
   </entry>
   
@@ -51,26 +131,25 @@
     <link href="https://yihchu.github.io/2020/09/01/yi-xie-shu-ju-lei-xing-zhuan-huan-de-zheng-li/"/>
     <id>https://yihchu.github.io/2020/09/01/yi-xie-shu-ju-lei-xing-zhuan-huan-de-zheng-li/</id>
     <published>2020-09-01T02:10:11.000Z</published>
-    <updated>2020-09-01T02:50:02.799Z</updated>
+    <updated>2020-09-01T02:50:02.000Z</updated>
     
-    <summary type="html">
     
       
       
         
         
-          &lt;h1 id=&quot;数组-和-流&quot;&gt;&lt;a href=&quot;#数组-和-流&quot; class=&quot;headerlink&quot; title=&quot;数组 和 流&quot;&gt;&lt;/a&gt;数组 和 流&lt;/h1&gt;&lt;h2 id=&quot;原始类型数组-to-Stream&quot;&gt;&lt;a href=&quot;#原始类型数组-to-Stream&quot;
+    <summary type="html">&lt;h1 id=&quot;数组-和-流&quot;&gt;&lt;a href=&quot;#数组-和-流&quot; class=&quot;headerlink&quot; title=&quot;数组 和 流&quot;&gt;&lt;/a&gt;数组 和 流&lt;/h1&gt;&lt;h2 id=&quot;原始类型数组-to-Stream&quot;&gt;&lt;a href=&quot;#原始类型数组-to-Stream&quot;</summary>
         
       
     
-    </summary>
-    
-      <category term="基础知识" scheme="https://yihchu.github.io/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     
     
-      <category term="java" scheme="https://yihchu.github.io/tags/java/"/>
+    <category term="基础知识" scheme="https://yihchu.github.io/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     
-      <category term="类型转换" scheme="https://yihchu.github.io/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/"/>
+    
+    <category term="java" scheme="https://yihchu.github.io/tags/java/"/>
+    
+    <category term="类型转换" scheme="https://yihchu.github.io/tags/%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/"/>
     
   </entry>
   
@@ -79,28 +158,27 @@
     <link href="https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/"/>
     <id>https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/</id>
     <published>2020-08-17T08:48:29.000Z</published>
-    <updated>2020-08-21T08:59:32.760Z</updated>
+    <updated>2020-08-21T08:59:32.000Z</updated>
     
-    <summary type="html">
     
       
       
         
         
-          &lt;h1 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h1&gt;&lt;ul&gt;
+    <summary type="html">&lt;h1 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h1&gt;&lt;ul&gt;
 &lt;li&gt;元素(entry): 具体存储数据的东西&lt;/li&gt;
-&lt;li&gt;桶(bucket):
+&lt;li&gt;桶(bucket):</summary>
         
       
     
-    </summary>
-    
-      <category term="基础知识" scheme="https://yihchu.github.io/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     
     
-      <category term="java" scheme="https://yihchu.github.io/tags/java/"/>
+    <category term="基础知识" scheme="https://yihchu.github.io/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     
-      <category term="HashMap" scheme="https://yihchu.github.io/tags/HashMap/"/>
+    
+    <category term="java" scheme="https://yihchu.github.io/tags/java/"/>
+    
+    <category term="HashMap" scheme="https://yihchu.github.io/tags/HashMap/"/>
     
   </entry>
   
@@ -109,28 +187,27 @@
     <link href="https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/"/>
     <id>https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/</id>
     <published>2020-08-13T05:35:04.000Z</published>
-    <updated>2020-08-20T02:36:07.440Z</updated>
+    <updated>2020-08-20T02:36:07.000Z</updated>
     
-    <summary type="html">
     
       
       
         
         
-          &lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;我们经常使用useGenerateKeys来返回自增主键，避免多一次查询。也会经常使用on duplicate key
+    <summary type="html">&lt;h1 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h1&gt;&lt;p&gt;我们经常使用useGenerateKeys来返回自增主键，避免多一次查询。也会经常使用on duplicate key</summary>
         
       
     
-    </summary>
-    
-      <category term="遇到的问题" scheme="https://yihchu.github.io/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
     
     
-      <category term="issue" scheme="https://yihchu.github.io/tags/issue/"/>
+    <category term="遇到的问题" scheme="https://yihchu.github.io/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
     
-      <category term="Mybatis" scheme="https://yihchu.github.io/tags/Mybatis/"/>
     
-      <category term="useGeneratedKeys" scheme="https://yihchu.github.io/tags/useGeneratedKeys/"/>
+    <category term="issue" scheme="https://yihchu.github.io/tags/issue/"/>
+    
+    <category term="Mybatis" scheme="https://yihchu.github.io/tags/Mybatis/"/>
+    
+    <category term="useGeneratedKeys" scheme="https://yihchu.github.io/tags/useGeneratedKeys/"/>
     
   </entry>
   

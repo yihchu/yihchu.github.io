@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <meta name="author" content="Joker">
@@ -78,7 +79,8 @@
     });
 </script>
 <!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
 
 
@@ -86,6 +88,7 @@
     
 
 
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Joker's Blog" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
 <link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 <body>
@@ -159,7 +162,8 @@
 redisTemplate<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">"joker"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 redisTemplate<span class="token punctuation">.</span><span class="token function">multi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 redisTemplate<span class="token punctuation">.</span><span class="token function">opsForHash</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"joker"</span><span class="token punctuation">,</span> <span class="token string">"pet"</span><span class="token punctuation">,</span> <span class="token string">"beibei"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-redisTemplate<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+redisTemplate<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行这段代码，程序就会给出<code>Caused by: org.springframework.data.redis.RedisSystemException: Error in execution; nested exception is io.lettuce.core.RedisCommandExecutionException: ERR EXEC without MULTI</code>错误，但是我明明执行<code>multi()</code>了呀~ </p>
 <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>遇到问题，第一部当然是去问<code>google</code>，但是现在搜出来的结果很多都是抄的，而且很多抄的还是驴唇不对马嘴~<br>也不知道咋回事，我记得以前<code>google</code>的搜索结果不是这样的~</p>
 <p>我们一层一层的剥开，可以找到这么一个干实事的函数：</p>
@@ -174,50 +178,51 @@ redisTemplate<span class="token punctuation">.</span><span class="token function
      * @return object returned by the action
      */</span>
     <span class="token annotation punctuation">@Nullable</span>
-    <span class="token keyword">public</span> <span class="token operator">&lt;</span>T<span class="token operator">></span> T <span class="token function">execute</span><span class="token punctuation">(</span>RedisCallback<span class="token operator">&lt;</span>T<span class="token operator">></span> action<span class="token punctuation">,</span> <span class="token keyword">boolean</span> exposeConnection<span class="token punctuation">,</span> <span class="token keyword">boolean</span> pipeline<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token operator">&lt;</span>T<span class="token operator">></span> T <span class="token function">execute</span><span class="token punctuation">(</span>RedisCallback<span class="token operator">&lt;</span>T<span class="token operator">></span> action<span class="token punctuation">,</span> <span class="token keyword">boolean</span> exposeConnection<span class="token punctuation">,</span> <span class="token keyword">boolean</span> pipeline<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 
         Assert<span class="token punctuation">.</span><span class="token function">isTrue</span><span class="token punctuation">(</span>initialized<span class="token punctuation">,</span> <span class="token string">"template not initialized; call afterPropertiesSet() before using it"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         Assert<span class="token punctuation">.</span><span class="token function">notNull</span><span class="token punctuation">(</span>action<span class="token punctuation">,</span> <span class="token string">"Callback object must not be null"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
         RedisConnectionFactory factory <span class="token operator">=</span> <span class="token function">getRequiredConnectionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         RedisConnection conn <span class="token operator">=</span> null<span class="token punctuation">;</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
             <span class="token comment" spellcheck="true">// 1</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>enableTransactionSupport<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>enableTransactionSupport<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
                 <span class="token comment" spellcheck="true">// only bind resources in case of potential transaction synchronization</span>
                 conn <span class="token operator">=</span> RedisConnectionUtils<span class="token punctuation">.</span><span class="token function">bindConnection</span><span class="token punctuation">(</span>factory<span class="token punctuation">,</span> enableTransactionSupport<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
                 conn <span class="token operator">=</span> RedisConnectionUtils<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span>factory<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
             <span class="token keyword">boolean</span> existingConnection <span class="token operator">=</span> TransactionSynchronizationManager<span class="token punctuation">.</span><span class="token function">hasResource</span><span class="token punctuation">(</span>factory<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
             RedisConnection connToUse <span class="token operator">=</span> <span class="token function">preProcessConnection</span><span class="token punctuation">(</span>conn<span class="token punctuation">,</span> existingConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
             <span class="token keyword">boolean</span> pipelineStatus <span class="token operator">=</span> connToUse<span class="token punctuation">.</span><span class="token function">isPipelined</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>pipeline <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>pipelineStatus<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>pipeline <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>pipelineStatus<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
                 connToUse<span class="token punctuation">.</span><span class="token function">openPipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
             RedisConnection connToExpose <span class="token operator">=</span> <span class="token punctuation">(</span>exposeConnection <span class="token operator">?</span> connToUse <span class="token operator">:</span> <span class="token function">createRedisConnectionProxy</span><span class="token punctuation">(</span>connToUse<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             T result <span class="token operator">=</span> action<span class="token punctuation">.</span><span class="token function">doInRedis</span><span class="token punctuation">(</span>connToExpose<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
             <span class="token comment" spellcheck="true">// close pipeline</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>pipeline <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>pipelineStatus<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>pipeline <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>pipelineStatus<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
                 connToUse<span class="token punctuation">.</span><span class="token function">closePipeline</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
             <span class="token comment" spellcheck="true">// TODO: any other connection processing?</span>
             <span class="token keyword">return</span> <span class="token function">postProcessResult</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> connToUse<span class="token punctuation">,</span> existingConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">finally</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
             RedisConnectionUtils<span class="token punctuation">.</span><span class="token function">releaseConnection</span><span class="token punctuation">(</span>conn<span class="token punctuation">,</span> factory<span class="token punctuation">,</span> enableTransactionSupport<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在代码<code>1</code>处，可以看到有<code>enableTransactionSupport</code>这么一个参数，看一下他的值是<code>false</code>的话，那么会重新拿一个连接(而且他的默认值还就是<code>false</code>)，这也就解释了为啥我们明明执行<code>multi</code>了，但是还没说我们在<code>exec</code>前没有<code>multi</code>~<br>但是，如果<code>enableTransactionSupport</code>的值是<code>true</code>呢，他又干了啥呢？我们一路点进去，找到了这么一个函数：</p>
 <pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * Gets a Redis connection. Is aware of and will return any existing corresponding connections bound to the current
      * thread, for example when using a transaction manager. Will create a new Connection otherwise, if
-     * {@code allowCreate} is &lt;tt>true&lt;/tt>.
+     * &amp;#123;@code allowCreate&amp;#125; is &lt;tt>true&lt;/tt>.
      *
      * @param factory connection factory for creating the connection.
      * @param allowCreate whether a new (unbound) connection should be created when no connection can be found for the
@@ -227,48 +232,49 @@ redisTemplate<span class="token punctuation">.</span><span class="token function
      * @return an active Redis connection.
      */</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> RedisConnection <span class="token function">doGetConnection</span><span class="token punctuation">(</span>RedisConnectionFactory factory<span class="token punctuation">,</span> <span class="token keyword">boolean</span> allowCreate<span class="token punctuation">,</span> <span class="token keyword">boolean</span> bind<span class="token punctuation">,</span>
-            <span class="token keyword">boolean</span> transactionSupport<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">boolean</span> transactionSupport<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 
         Assert<span class="token punctuation">.</span><span class="token function">notNull</span><span class="token punctuation">(</span>factory<span class="token punctuation">,</span> <span class="token string">"No RedisConnectionFactory specified"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token comment" spellcheck="true">// 1</span>
         RedisConnectionHolder connHolder <span class="token operator">=</span> <span class="token punctuation">(</span>RedisConnectionHolder<span class="token punctuation">)</span> TransactionSynchronizationManager<span class="token punctuation">.</span><span class="token function">getResource</span><span class="token punctuation">(</span>factory<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>connHolder <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// 2</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>transactionSupport<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>connHolder <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 2</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>transactionSupport<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
                 <span class="token function">potentiallyRegisterTransactionSynchronisation</span><span class="token punctuation">(</span>connHolder<span class="token punctuation">,</span> factory<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 3</span>
-            <span class="token punctuation">}</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
             <span class="token keyword">return</span> connHolder<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
-        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>allowCreate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>allowCreate<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
             <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalArgumentException</span><span class="token punctuation">(</span><span class="token string">"No connection found and allowCreate = false"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>log<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>log<span class="token punctuation">.</span><span class="token function">isDebugEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
             log<span class="token punctuation">.</span><span class="token function">debug</span><span class="token punctuation">(</span><span class="token string">"Opening RedisConnection"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
         RedisConnection conn <span class="token operator">=</span> factory<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4</span>
 
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>bind<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>bind<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 
             RedisConnection connectionToBind <span class="token operator">=</span> conn<span class="token punctuation">;</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>transactionSupport <span class="token operator">&amp;&amp;</span> <span class="token function">isActualNonReadonlyTransactionActive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>transactionSupport <span class="token operator">&amp;&amp;</span> <span class="token function">isActualNonReadonlyTransactionActive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
                 connectionToBind <span class="token operator">=</span> <span class="token function">createConnectionProxy</span><span class="token punctuation">(</span>conn<span class="token punctuation">,</span> factory<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
             connHolder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RedisConnectionHolder</span><span class="token punctuation">(</span>connectionToBind<span class="token punctuation">)</span><span class="token punctuation">;</span> 
 
             TransactionSynchronizationManager<span class="token punctuation">.</span><span class="token function">bindResource</span><span class="token punctuation">(</span>factory<span class="token punctuation">,</span> connHolder<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">// 5</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span>transactionSupport<span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>transactionSupport<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> 
                 <span class="token function">potentiallyRegisterTransactionSynchronisation</span><span class="token punctuation">(</span>connHolder<span class="token punctuation">,</span> factory<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
             <span class="token keyword">return</span> connHolder<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 8</span>
-        <span class="token punctuation">}</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 
         <span class="token keyword">return</span> conn<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>说明：</p>
 <ol>
 <li>这里有一个新的东西：<code>TransactionSynchronizationManager</code>，这是由<code>spring</code>提供的，他里面有一个叫<code>resources</code>的成员，他是一个<code>ThreadLocal</code>。所以这一行代码，就很清楚了，他是去拿到跟当前线程绑定的连接。</li>
@@ -285,7 +291,8 @@ redisTemplate<span class="token punctuation">.</span><span class="token function
 redisTemplate<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">"joker"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 3</span>
 redisTemplate<span class="token punctuation">.</span><span class="token function">multi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 4</span>
 redisTemplate<span class="token punctuation">.</span><span class="token function">opsForHash</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"joker"</span><span class="token punctuation">,</span> <span class="token string">"pet"</span><span class="token punctuation">,</span> <span class="token string">"beibei"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 5</span>
-redisTemplate<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 6</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+redisTemplate<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 6</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>说明：</p>
 <ol>
 <li>初始化一条数据~</li>
@@ -296,14 +303,15 @@ redisTemplate<span class="token punctuation">.</span><span class="token function
 <li>执行<code>exec</code>方法，同样是拿到与线程绑定的连接后，通过该连接执行<code>exec</code>方法~ 因为该连接已经执行了<code>watch</code>和<code>multi</code>，所以在此之前，对应的<code>key</code>如果发生变化，那么，不会执行成功，我们的目的也就达到了~</li>
 </ol>
 <p>不过，这种方法还有一个问题，大家可以顺着源代码继续往下捋~ 会发现，与当前线程绑定的连接不会解绑，更不会被<code>close</code>~<br>所以，感觉<code>RedisTemplate</code>提供的<code>SessionCallback</code>才是正解~</p>
-<pre class="line-numbers language-java"><code class="language-java">redisTemplate<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SessionCallback</span><span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Object<span class="token operator">>></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> List<span class="token operator">&lt;</span>Object<span class="token operator">></span> <span class="token function">execute</span><span class="token punctuation">(</span>RedisOperations operations<span class="token punctuation">)</span> <span class="token keyword">throws</span> DataAccessException <span class="token punctuation">{</span>
+<pre class="line-numbers language-java"><code class="language-java">redisTemplate<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SessionCallback</span><span class="token operator">&lt;</span>List<span class="token operator">&lt;</span>Object<span class="token operator">>></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> List<span class="token operator">&lt;</span>Object<span class="token operator">></span> <span class="token function">execute</span><span class="token punctuation">(</span>RedisOperations operations<span class="token punctuation">)</span> <span class="token keyword">throws</span> DataAccessException <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
         operations<span class="token punctuation">.</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">"joker"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         operations<span class="token punctuation">.</span><span class="token function">multi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         operations<span class="token punctuation">.</span><span class="token function">opsForHash</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"joker"</span><span class="token punctuation">,</span> <span class="token string">"pet"</span><span class="token punctuation">,</span> <span class="token string">"beibei"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span> operations<span class="token punctuation">.</span><span class="token function">exec</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>RedisTemplate</code>的<code>public &lt;T&gt; T execute(SessionCallback&lt;T&gt; session)</code>方法，会在<code>finally</code>中调用<code>RedisConnectionUtils.unbindConnection(factory);</code>来解除执行过程中与当前线程绑定的连接，并在随后关闭连接。</p>
 
         </section>
