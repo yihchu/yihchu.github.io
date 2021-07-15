@@ -6,7 +6,7 @@
   <link href="https://yihchu.github.io/atom.xml" rel="self"/>
   
   <link href="https://yihchu.github.io/"/>
-  <updated>2021-07-09T08:49:12.908Z</updated>
+  <updated>2021-07-15T09:35:53.305Z</updated>
   <id>https://yihchu.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>零零碎碎的知识点</title>
+    <link href="https://yihchu.github.io/2021/07/15/ling-ling-sui-sui-de-zhi-shi-dian/"/>
+    <id>https://yihchu.github.io/2021/07/15/ling-ling-sui-sui-de-zhi-shi-dian/</id>
+    <published>2021-07-15T09:27:53.000Z</published>
+    <updated>2021-07-15T09:35:53.305Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Atomic-Access-和-volatile关键字&quot;&gt;&lt;a href=&quot;#Atomic-Access-和-volatile关键字&quot; class=&quot;headerlink&quot; title=&quot;Atomic Access 和</summary>
+        
+      
+    
+    
+    
+    <category term="基础知识" scheme="https://yihchu.github.io/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
+    
+    
+    <category term="java" scheme="https://yihchu.github.io/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>零零碎碎的历史和概念</title>

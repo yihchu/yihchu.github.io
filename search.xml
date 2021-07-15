@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>零零碎碎的知识点</title>
+      <link href="/2021/07/15/ling-ling-sui-sui-de-zhi-shi-dian/"/>
+      <url>/2021/07/15/ling-ling-sui-sui-de-zhi-shi-dian/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Atomic-Access-和-volatile关键字"><a href="#Atomic-Access-和-volatile关键字" class="headerlink" title="Atomic Access 和 volatile关键字"></a>Atomic Access 和 volatile关键字</h1><p>对声明了volatile关键字的所有变量（包括long和double类型的变量）的读，写操作都是原子的。<br><code>Reads and writes are atomic for all variables declared volatile (including long and double variables).</code></p><p><a href="https://docs.oracle.com/javase/tutorial/essential/concurrency/atomic.html">oracle的jdk8文档</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 基础知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>零零碎碎的历史和概念</title>
       <link href="/2021/07/09/ling-ling-sui-sui-de-li-shi-he-gai-nian/"/>
       <url>/2021/07/09/ling-ling-sui-sui-de-li-shi-he-gai-nian/</url>
