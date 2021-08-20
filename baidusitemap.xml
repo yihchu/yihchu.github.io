@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/</loc>
+    <lastmod>2021-08-20</lastmod>
+  </url>
+  <url>
     <loc>https://yihchu.github.io/2021/07/15/ling-ling-sui-sui-de-zhi-shi-dian/</loc>
     <lastmod>2021-07-29</lastmod>
   </url>
@@ -23,10 +27,6 @@
   <url>
     <loc>https://yihchu.github.io/2020/09/01/yi-xie-shu-ju-lei-xing-zhuan-huan-de-zheng-li/</loc>
     <lastmod>2020-09-01</lastmod>
-  </url>
-  <url>
-    <loc>https://yihchu.github.io/2020/08/17/hashmap-de-yi-xie-bi-ji/</loc>
-    <lastmod>2020-08-21</lastmod>
   </url>
   <url>
     <loc>https://yihchu.github.io/2020/08/13/guan-yu-mybatis-shi-yong-usegeneratedkeys-huo-qu-zi-zeng-zhu-jian/</loc>
