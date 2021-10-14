@@ -6,7 +6,7 @@
   <link href="https://yihchu.github.io/atom.xml" rel="self"/>
   
   <link href="https://yihchu.github.io/"/>
-  <updated>2021-07-29T09:07:06.771Z</updated>
+  <updated>2021-10-14T09:12:14.424Z</updated>
   <id>https://yihchu.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于WebSocket跨域的问题</title>
+    <link href="https://yihchu.github.io/2021/10/14/guan-yu-websocket-kua-yu-de-wen-ti/"/>
+    <id>https://yihchu.github.io/2021/10/14/guan-yu-websocket-kua-yu-de-wen-ti/</id>
+    <published>2021-10-14T08:04:30.000Z</published>
+    <updated>2021-10-14T09:12:14.424Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;前话&quot;&gt;&lt;a href=&quot;#前话&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="遇到的问题" scheme="https://yihchu.github.io/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    
+    
+    <category term="WebSocket" scheme="https://yihchu.github.io/tags/WebSocket/"/>
+    
+    <category term="Stomp" scheme="https://yihchu.github.io/tags/Stomp/"/>
+    
+    <category term="CORS" scheme="https://yihchu.github.io/tags/CORS/"/>
+    
+  </entry>
   
   <entry>
     <title>零零碎碎的知识点</title>
@@ -46,7 +75,7 @@
     <link href="https://yihchu.github.io/2021/07/09/ling-ling-sui-sui-de-li-shi-he-gai-nian/"/>
     <id>https://yihchu.github.io/2021/07/09/ling-ling-sui-sui-de-li-shi-he-gai-nian/</id>
     <published>2021-07-09T06:31:51.000Z</published>
-    <updated>2021-07-09T08:49:12.908Z</updated>
+    <updated>2021-10-11T08:09:02.796Z</updated>
     
     
       
