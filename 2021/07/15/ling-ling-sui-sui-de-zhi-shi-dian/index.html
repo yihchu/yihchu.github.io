@@ -166,6 +166,8 @@
 <p>如：</p>
 <p><img src="./3.png"></p>
 <p>移除后，可以看到gogs就不带有@符号。</p>
+<h1 id="Q-E"><a href="#Q-E" class="headerlink" title="\Q + \E"></a>\Q + \E</h1><p>在正则表达式中，使用<code>\Q</code>开始，<code>\E</code>结束，可使中间的标点符号失去特殊意义，将中间的字符作为普通字符。<br>如<code>\Qhttp://localhost:[\E.*\Q]\E</code>，表示<code>http://localhost:[</code>这一截和<code>]</code>都是普通字符。</p>
+<h1 id="关于多module的工程"><a href="#关于多module的工程" class="headerlink" title="关于多module的工程"></a>关于多module的工程</h1><p>如果其中一个module要依赖另一个module，那么务必在工程的根目录先执行安装，即<code>mvn install</code>。<br>否则将会出现<code> Failed to read artifact descriptor for xxx;</code>以及<code>Could not find artifact xxx</code>等错误。</p>
 
         </section>
     </article>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Joker">
+
+
+    <meta name="subtitle" content="他强由他强，清风拂山岗～">
+
+
+    <meta name="description" content="哈尔滨工业大学 | 计算机科学与技术">
+
+
+    <meta name="keywords" content="Joker Blog">
+
+
+<title>AnotationProcessor相关 | Joker&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Joker's Blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Joker&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Joker&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/categories">Categories</a>
+                
+                    <a class="menu-item" href="/tags">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+
+</script>
+
+        <div class="main">
+            <div class="container">
+    <article class="post-wrap page">
+        
+        <h2 class="post-title">AnotationProcessor相关</h2>
+        
+        <section class="post-content">
+            <h1 id="前话"><a href="#前话" class="headerlink" title="前话"></a>前话</h1><p>干活的时候，很多时候都是增删改查，重复劳动。甚至有的东西，就纯粹是一个模式，CV大法。<br>比如从数据库的Entity类，转换成给前端的数据，很多时候是原封不动，或者做一些简单的编辑。<br>那既然java的注解那么强大，为啥不琢磨琢磨整一个注解来解决这些事情呢？</p>
+<h1 id="原材料"><a href="#原材料" class="headerlink" title="原材料"></a>原材料</h1><h2 id="tools-jar"><a href="#tools-jar" class="headerlink" title="tools.jar"></a><code>tools.jar</code></h2><p>这个在<code>1.8</code>以及之前的<code>jdk</code>包中，是可以在安装目录下找到的。<br>但是之后的版本中就没有了，我这里用的是<code>java 11</code>，但是用<code>1.8</code>版本的<code>tools.jar</code>也是没毛病的。</p>
+<h2 id="AbstractProcessor"><a href="#AbstractProcessor" class="headerlink" title="AbstractProcessor"></a><code>AbstractProcessor</code></h2><p>这个是注解处理器，在编译时通过注解来生成一些代码，就需要用这个。比如大名鼎鼎的<code>lombok</code>也是通过这个实现了很多功能。</p>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="AbstractProcessor-1"><a href="#AbstractProcessor-1" class="headerlink" title="AbstractProcessor"></a>AbstractProcessor</h2><p>这个就是注解处理器，他有两个方法，需要我们实现。<br>此外，还需要配置该注解处理器感兴趣的注解以及指定<code>java</code>版本。<br>后者可以通过注解或者实现<code>AbstractProcessor</code>方法两种方式来实现。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="SupportedAnnotationTypes"><a href="#SupportedAnnotationTypes" class="headerlink" title="SupportedAnnotationTypes"></a>SupportedAnnotationTypes</h4><p>配置注解处理器感兴趣的注解，这里可以通过实现</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Set<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">getSupportedAnnotationTypes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>方法来配置。</p>
+<h4 id="SupportedSourceVersion"><a href="#SupportedSourceVersion" class="headerlink" title="SupportedSourceVersion"></a>SupportedSourceVersion</h4><p>设定<code>java</code>版本，这里也可以通过实现</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> SourceVersion <span class="token function">getSupportedSourceVersion</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>来配置。</p>
+<h3 id="init"><a href="#init" class="headerlink" title="init"></a>init</h3><p>获取注解处理器需要用到的一些对象。</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span>ProcessingEnvironment processingEnv<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span>processingEnv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="process"><a href="#process" class="headerlink" title="process"></a>process</h3><p>注解处理器的关键方法，用来根据注解对编译过程就行干预。<br>返回值表示这个过程中，代码是否发生了修改。</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">process</span><span class="token punctuation">(</span>Set<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">TypeElement</span><span class="token operator">></span> annotations<span class="token punctuation">,</span> RoundEnvironment roundEnv<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><h3 id="Import"><a href="#Import" class="headerlink" title="Import"></a>Import</h3><pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">addImportInfo</span><span class="token punctuation">(</span>Element element<span class="token punctuation">,</span> String classPath<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> idx <span class="token operator">=</span> classPath<span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String pkg <span class="token operator">=</span> classPath<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> idx<span class="token punctuation">)</span><span class="token punctuation">,</span> clz <span class="token operator">=</span> classPath<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>idx <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        TreePath treePath <span class="token operator">=</span> trees<span class="token punctuation">.</span><span class="token function">getPath</span><span class="token punctuation">(</span>element<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Tree leaf <span class="token operator">=</span> treePath<span class="token punctuation">.</span><span class="token function">getLeaf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>treePath<span class="token punctuation">.</span><span class="token function">getCompilationUnit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">instanceof</span> <span class="token class-name">JCTree<span class="token punctuation">.</span>JCCompilationUnit</span> <span class="token operator">&amp;&amp;</span> leaf <span class="token keyword">instanceof</span> <span class="token class-name">JCTree</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            JCTree<span class="token punctuation">.</span>JCCompilationUnit jccu <span class="token operator">=</span> <span class="token punctuation">(</span>JCTree<span class="token punctuation">.</span>JCCompilationUnit<span class="token punctuation">)</span> treePath<span class="token punctuation">.</span><span class="token function">getCompilationUnit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>JCTree jcTree <span class="token operator">:</span> jccu<span class="token punctuation">.</span><span class="token function">getImports</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>jcTree <span class="token operator">!=</span> null <span class="token operator">&amp;&amp;</span> jcTree <span class="token keyword">instanceof</span> <span class="token class-name">JCTree<span class="token punctuation">.</span>JCImport</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                    JCTree<span class="token punctuation">.</span>JCImport jcImport <span class="token operator">=</span> <span class="token punctuation">(</span>JCTree<span class="token punctuation">.</span>JCImport<span class="token punctuation">)</span> jcTree<span class="token punctuation">;</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>jcImport<span class="token punctuation">.</span>qualid <span class="token operator">!=</span> null <span class="token operator">&amp;&amp;</span> jcImport<span class="token punctuation">.</span>qualid <span class="token keyword">instanceof</span> <span class="token class-name">JCTree<span class="token punctuation">.</span>JCFieldAccess</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                        JCTree<span class="token punctuation">.</span>JCFieldAccess jcFieldAccess <span class="token operator">=</span> <span class="token punctuation">(</span>JCTree<span class="token punctuation">.</span>JCFieldAccess<span class="token punctuation">)</span> jcImport<span class="token punctuation">.</span>qualid<span class="token punctuation">;</span>
+                        <span class="token keyword">try</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                            <span class="token keyword">if</span> <span class="token punctuation">(</span>pkg<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>jcFieldAccess<span class="token punctuation">.</span>selected<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> clz<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>jcFieldAccess<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                                <span class="token keyword">return</span><span class="token punctuation">;</span>
+                            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+                        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">NullPointerException</span> e<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+                    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+                <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+            java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token operator">&lt;</span>JCTree<span class="token operator">></span> trees <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            trees<span class="token punctuation">.</span><span class="token function">addAll</span><span class="token punctuation">(</span>jccu<span class="token punctuation">.</span>defs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            JCTree<span class="token punctuation">.</span>JCIdent ident <span class="token operator">=</span> treeMaker<span class="token punctuation">.</span><span class="token function">Ident</span><span class="token punctuation">(</span>names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span>pkg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            JCTree<span class="token punctuation">.</span>JCImport jcImport <span class="token operator">=</span> treeMaker<span class="token punctuation">.</span><span class="token function">Import</span><span class="token punctuation">(</span>treeMaker<span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>
+                ident<span class="token punctuation">,</span> names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span>clz<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            idx <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span>JCTree tree<span class="token operator">:</span> trees<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>tree <span class="token keyword">instanceof</span> <span class="token class-name">JCTree<span class="token punctuation">.</span>JCPackageDecl</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                    <span class="token operator">++</span>idx<span class="token punctuation">;</span>
+                <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>trees<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>jcImport<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                trees<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>idx<span class="token punctuation">,</span> jcImport<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+            jccu<span class="token punctuation">.</span>defs <span class="token operator">=</span> List<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>trees<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个方法有一个问题，就是如果在代码中并没有真正使用引入的类，那么即使调用了这个方法，那编译出来的<code>.class</code>文件依然会把这条多余的引用语句删掉。</p>
+<h3 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h3><h4 id="获取类的所有字段"><a href="#获取类的所有字段" class="headerlink" title="获取类的所有字段"></a>获取类的所有字段</h4><pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">private</span> List<span class="token operator">&lt;</span>JCTree<span class="token punctuation">.</span>JCVariableDecl<span class="token operator">></span> <span class="token function">getJCVariables</span><span class="token punctuation">(</span>JCTree<span class="token punctuation">.</span>JCClassDecl jcClass<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        ListBuffer<span class="token operator">&lt;</span>JCTree<span class="token punctuation">.</span>JCVariableDecl<span class="token operator">></span> jcVariables <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListBuffer</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//遍历jcClass的所有内部节点，可能是字段，方法等等</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>JCTree jcTree <span class="token operator">:</span> jcClass<span class="token punctuation">.</span>defs<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//找出所有set方法节点，并添加</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isValidField</span><span class="token punctuation">(</span>jcTree<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//注意这个com.sun.tools.javac.util.List的用法，不支持链式操作，更改后必须赋值</span>
+                jcVariables<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token punctuation">(</span>JCTree<span class="token punctuation">.</span>JCVariableDecl<span class="token punctuation">)</span> jcTree<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> jcVariables<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="生成get方法"><a href="#生成get方法" class="headerlink" title="生成get方法"></a>生成<code>get</code>方法</h4><pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">private</span> JCTree<span class="token punctuation">.</span>JCMethodDecl <span class="token function">makeGetterMethodDecl</span><span class="token punctuation">(</span>JCTree<span class="token punctuation">.</span>JCVariableDecl jcVariableDecl<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        ListBuffer<span class="token operator">&lt;</span>JCTree<span class="token punctuation">.</span>JCStatement<span class="token operator">></span> statements <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListBuffer</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        statements<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>treeMaker<span class="token punctuation">.</span><span class="token function">Return</span><span class="token punctuation">(</span>treeMaker<span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>treeMaker<span class="token punctuation">.</span><span class="token function">Ident</span><span class="token punctuation">(</span>names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span><span class="token string">"this"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> jcVariableDecl<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        JCTree<span class="token punctuation">.</span>JCBlock body <span class="token operator">=</span> treeMaker<span class="token punctuation">.</span><span class="token function">Block</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> statements<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> treeMaker<span class="token punctuation">.</span><span class="token function">MethodDef</span><span class="token punctuation">(</span>treeMaker<span class="token punctuation">.</span><span class="token function">Modifiers</span><span class="token punctuation">(</span>Flags<span class="token punctuation">.</span>PUBLIC<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">getNewMethodName</span><span class="token punctuation">(</span>jcVariableDecl<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> jcVariableDecl<span class="token punctuation">.</span>vartype<span class="token punctuation">,</span> List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> body<span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Name <span class="token function">getNewMethodName</span><span class="token punctuation">(</span>Name name<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        String s <span class="token operator">=</span> name<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span><span class="token string">"hello"</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> name<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="NoArgsConstructor"><a href="#NoArgsConstructor" class="headerlink" title="NoArgsConstructor"></a>NoArgsConstructor</h3><pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">private</span> JCTree<span class="token punctuation">.</span>JCMethodDecl <span class="token function">createNoArgsConstructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        JCTree<span class="token punctuation">.</span>JCBlock jcBlock <span class="token operator">=</span> treeMaker<span class="token punctuation">.</span><span class="token function">Block</span><span class="token punctuation">(</span>
+                <span class="token number">0</span> <span class="token comment" spellcheck="true">//访问标志</span>
+                <span class="token punctuation">,</span> List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//所有的语句</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> treeMaker<span class="token punctuation">.</span><span class="token function">MethodDef</span><span class="token punctuation">(</span>
+                treeMaker<span class="token punctuation">.</span><span class="token function">Modifiers</span><span class="token punctuation">(</span>Flags<span class="token punctuation">.</span>PUBLIC<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//访问标志</span>
+                names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span>CONSTRUCTOR_NAME<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//名字</span>
+                treeMaker<span class="token punctuation">.</span><span class="token function">TypeIdent</span><span class="token punctuation">(</span>TypeTag<span class="token punctuation">.</span>VOID<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//返回类型</span>
+                List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//泛型形参列表</span>
+                List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//参数列表</span>
+                List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//异常列表</span>
+                jcBlock<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//方法体</span>
+                null <span class="token comment" spellcheck="true">//默认方法（可能是interface中的那个default）</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="AllArgsConstructor"><a href="#AllArgsConstructor" class="headerlink" title="AllArgsConstructor"></a>AllArgsConstructor</h3><pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">private</span> JCTree<span class="token punctuation">.</span>JCMethodDecl <span class="token function">createAllArgsConstructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        ListBuffer<span class="token operator">&lt;</span>JCTree<span class="token punctuation">.</span>JCStatement<span class="token operator">></span> jcStatements <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListBuffer</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>JCTree<span class="token punctuation">.</span>JCVariableDecl jcVariable <span class="token operator">:</span> fieldJCVariables<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//添加构造方法的赋值语句 " this.xxx = xxx; "</span>
+            jcStatements<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>
+                    treeMaker<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>
+                            treeMaker<span class="token punctuation">.</span><span class="token function">Assign</span><span class="token punctuation">(</span>
+                                    treeMaker<span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>
+                                            treeMaker<span class="token punctuation">.</span><span class="token function">Ident</span><span class="token punctuation">(</span>names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span>THIS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                            names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span>jcVariable<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                                    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                    treeMaker<span class="token punctuation">.</span><span class="token function">Ident</span><span class="token punctuation">(</span>names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span>jcVariable<span class="token punctuation">.</span>name<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                            <span class="token punctuation">)</span>
+                    <span class="token punctuation">)</span>
+            <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        JCTree<span class="token punctuation">.</span>JCBlock jcBlock <span class="token operator">=</span> treeMaker<span class="token punctuation">.</span><span class="token function">Block</span><span class="token punctuation">(</span>
+                <span class="token number">0</span> <span class="token comment" spellcheck="true">//访问标志</span>
+                <span class="token punctuation">,</span> jcStatements<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//所有的语句</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> treeMaker<span class="token punctuation">.</span><span class="token function">MethodDef</span><span class="token punctuation">(</span>
+                treeMaker<span class="token punctuation">.</span><span class="token function">Modifiers</span><span class="token punctuation">(</span>Flags<span class="token punctuation">.</span>PUBLIC<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//访问标志</span>
+                names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span>CONSTRUCTOR_NAME<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//名字</span>
+                treeMaker<span class="token punctuation">.</span><span class="token function">TypeIdent</span><span class="token punctuation">(</span>TypeTag<span class="token punctuation">.</span>VOID<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//返回类型</span>
+                List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//泛型形参列表</span>
+                <span class="token function">cloneJCVariablesAsParams</span><span class="token punctuation">(</span>treeMaker<span class="token punctuation">,</span> fieldJCVariables<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//参数列表</span>
+                List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//异常列表</span>
+                jcBlock<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//方法体</span>
+                null <span class="token comment" spellcheck="true">//默认方法（可能是interface中的那个default）</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="EntityToDtoConstructor"><a href="#EntityToDtoConstructor" class="headerlink" title="EntityToDtoConstructor"></a>EntityToDtoConstructor</h3><pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">private</span> JCTree<span class="token punctuation">.</span>JCMethodDecl <span class="token function">createToEntityConstructor</span><span class="token punctuation">(</span>Element element<span class="token punctuation">,</span> String mappings<span class="token punctuation">,</span> Element param<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        ListBuffer<span class="token operator">&lt;</span>JCTree<span class="token punctuation">.</span>JCVariableDecl<span class="token operator">></span> jcVariables <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListBuffer</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        jcVariables<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>
+                treeMaker<span class="token punctuation">.</span><span class="token function">Param</span><span class="token punctuation">(</span>names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span><span class="token string">"entity"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>Type<span class="token punctuation">)</span> param<span class="token punctuation">.</span><span class="token function">asType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ListBuffer<span class="token operator">&lt;</span>JCTree<span class="token punctuation">.</span>JCStatement<span class="token operator">></span> jcStatements <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListBuffer</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>JCTree<span class="token punctuation">.</span>JCVariableDecl jcVariable<span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span>fieldJCVariables<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            jcStatements<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>
+                    treeMaker<span class="token punctuation">.</span><span class="token function">Exec</span><span class="token punctuation">(</span>
+                            treeMaker<span class="token punctuation">.</span><span class="token function">Assign</span><span class="token punctuation">(</span>
+                                    treeMaker<span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>
+                                            treeMaker<span class="token punctuation">.</span><span class="token function">Ident</span><span class="token punctuation">(</span>names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span>ProcessUtil<span class="token punctuation">.</span>THIS<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                            jcVariable<span class="token punctuation">.</span>name
+                                    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                    treeMaker<span class="token punctuation">.</span><span class="token function">Select</span><span class="token punctuation">(</span>
+                                            treeMaker<span class="token punctuation">.</span><span class="token function">Ident</span><span class="token punctuation">(</span>names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span><span class="token string">"entity"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                            jcVariable<span class="token punctuation">.</span>name
+                                    <span class="token punctuation">)</span>
+                            <span class="token punctuation">)</span>
+                    <span class="token punctuation">)</span>
+            <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> treeMaker<span class="token punctuation">.</span><span class="token function">MethodDef</span><span class="token punctuation">(</span>
+                treeMaker<span class="token punctuation">.</span><span class="token function">Modifiers</span><span class="token punctuation">(</span>Flags<span class="token punctuation">.</span>PUBLIC<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                names<span class="token punctuation">.</span><span class="token function">fromString</span><span class="token punctuation">(</span>ProcessUtil<span class="token punctuation">.</span>CONSTRUCTOR_NAME<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                treeMaker<span class="token punctuation">.</span><span class="token function">TypeIdent</span><span class="token punctuation">(</span>TypeTag<span class="token punctuation">.</span>VOID<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                jcVariables<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                List<span class="token punctuation">.</span><span class="token function">nil</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                treeMaker<span class="token punctuation">.</span><span class="token function">Block</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> jcStatements<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                null
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h1 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h1><h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><h3 id="1-8以上java版本如何使用tools-jar"><a href="#1-8以上java版本如何使用tools-jar" class="headerlink" title="1.8以上java版本如何使用tools.jar"></a><code>1.8</code>以上<code>java</code>版本如何使用<code>tools.jar</code></h3><pre class="line-numbers language-xml"><code class="language-xml">    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.sun<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>tools<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.8<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">></span></span>system<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>systemPath</span><span class="token punctuation">></span></span>$<span class="token entity" title="&#123;">&amp;#123;</span>project.basedir<span class="token entity" title="&#125;">&amp;#125;</span>/src/lib/tools.jar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>systemPath</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="auto-service"><a href="#auto-service" class="headerlink" title="auto-service"></a><code>auto-service</code></h3><p>在注解处理器的依赖中，最好增加这个依赖，他会自动生成<code>javax.annotation.processing.Processor</code>文件。</p>
+<h3 id="怎么调试注解处理器"><a href="#怎么调试注解处理器" class="headerlink" title="怎么调试注解处理器"></a>怎么调试注解处理器</h3><p><code>idea</code>右上角<code>Edit Configurations...</code>处，新增一个<code>Remote JVM Debug</code>，端口<code>5005</code>默认即可。 如图所示:<br><img src="./1.png"><br>然后两下上档键，输入<code>enable build process</code>，置为<code>ON</code>，如图所示：<br><img src="./2.png"><br>然后加上断点，正常启动项目，并<code>debug</code>启动新增的<code>remote debug</code>即可进入断点调试。</p>
+<h3 id="关于idea版本"><a href="#关于idea版本" class="headerlink" title="关于idea版本"></a>关于<code>idea</code>版本</h3><p>新版<code>idea</code>对注解处理器的支持似乎有一些问题。需要在<code>Perferences -&gt; Build, Execution, Deployment -&gt; Compiler -&gt; Shared builid process VM options</code><br>处填上<code>-Djps.track.ap.dependencies=false</code><br><img src="./3.png"></p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p><a target="_blank" rel="noopener" href="https://github.com/yihchu/Demos/tree/master/AnnotationProcessorDemo">GITHUB</a></p>
+<p><a href="https://yihchu.github.io/2022/01/12/anotationprocessor-xiang-guan/">BLOG</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://blog.mythsman.com/post/5d2c11c767f841464434a3bf/">Lombok原理分析与功能实现</a></p>
+<p><a target="_blank" rel="noopener" href="https://liuyehcf.github.io/2018/02/02/Java-JSR-269-%E6%8F%92%E5%85%A5%E5%BC%8F%E6%B3%A8%E8%A7%A3%E5%A4%84%E7%90%86%E5%99%A8/">Java-JSR-269-插入式注解处理器</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/nideshouhu/article/details/90757952#comments_19673727">关于ast抽象语法树JcImport和JCCompilationUnit的用法</a></p>
+
+        </section>
+    </article>
+</div>
+
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!--<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>-->
+<script src="/js/md5.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '36b12a4f8acac5e8f010',
+    clientSecret: 'c7feb2553bd78493497ce2c776852f3102659c43',
+    repo: 'yihchu.github.io',
+    owner: 'yihchu',
+    admin: 'yihchu',
+    id: md5(location.pathname),
+    labels: 'Gitalk'.split(',').filter(l => l),
+    perPage: 10,
+    pagerDirection: 'last',
+    createIssueManually: true,
+    distractionFreeMode: false
+  })
+  gitalk.render('gitalk-container')
+</script>
+
+
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Joker | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+    <div class="menu-div">
+        <input id="switch_default" type="checkbox" class="switch_default">
+        <label for="switch_default" class="toggleBtn hide"></label>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
