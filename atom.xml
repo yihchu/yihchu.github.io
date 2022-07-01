@@ -6,7 +6,7 @@
   <link href="https://yihchu.github.io/atom.xml" rel="self"/>
   
   <link href="https://yihchu.github.io/"/>
-  <updated>2022-01-21T08:40:27.549Z</updated>
+  <updated>2022-07-01T07:30:23.125Z</updated>
   <id>https://yihchu.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>人生不短</title>
+    <link href="https://yihchu.github.io/2022/07/01/ren-sheng-bu-duan/"/>
+    <id>https://yihchu.github.io/2022/07/01/ren-sheng-bu-duan/</id>
+    <published>2022-07-01T00:59:45.000Z</published>
+    <updated>2022-07-01T07:30:23.125Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1&gt;人生不短&lt;/h1&gt;
+
+&lt;p&gt;翻译自原文：&lt;a href=&quot;https://dkb.show/post/life-is-not-short&quot;&gt;Life is not short -</summary>
+        
+      
+    
+    
+    
+    <category term="杂谈" scheme="https://yihchu.github.io/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="翻译" scheme="https://yihchu.github.io/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+  </entry>
   
   <entry>
     <title>AnotationProcessor相关</title>
